@@ -12,3 +12,4 @@ public interface LikeablePersonRepository extends JpaRepository<LikeablePerson, 
 
     Optional<LikeablePerson> findById(Integer id);
 }
+//
