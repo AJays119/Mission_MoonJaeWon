@@ -66,7 +66,7 @@ public class LikeablePersonController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String delete(@PathVariable("id") Integer id) {
         Long instaMemberId = rq.getMember().getInstaMember().getId();
         LikeablePerson likeablePerson = likeablePersonService.findById(id).get();
@@ -76,5 +76,5 @@ public class LikeablePersonController {
         this.likeablePersonService.delete(likeablePerson);
         RsData deleteRs = likeablePersonService.delete(likeablePerson);
         return rq.redirectWithMsg("/likeablePerson/list", "삭제되었습니다.");
-    }
+    }//
 }

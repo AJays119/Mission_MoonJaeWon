@@ -57,5 +57,5 @@ public class LikeablePersonService {
     public RsData delete(LikeablePerson likeablePerson) {
         this.likeablePersonRepository.delete(likeablePerson);
         return RsData.of("S-1", "삭제되었습니다.");
-    }
+    }//
 }
