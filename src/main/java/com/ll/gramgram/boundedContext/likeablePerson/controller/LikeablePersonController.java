@@ -55,7 +55,7 @@ public class LikeablePersonController {
 
         // 인스타인증을 했는지 체크
         if (instaMember != null) {
-            List<LikeablePerson> likeablePeople = likeablePersonService.findByFromInstaMemberId(instaMember.getId());
+            List<LikeablePerson> likeablePeople = instaMember.getFromLikeablePeople();
             model.addAttribute("likeablePeople", likeablePeople);
         }
 
@@ -73,5 +73,5 @@ public class LikeablePersonController {
         this.likeablePersonService.delete(likeablePerson);
         RsData deleteRs = likeablePersonService.delete(likeablePerson);
         return rq.redirectWithMsg("/likeablePerson/list", "삭제되었습니다.");
-    }//
+    }
 }
