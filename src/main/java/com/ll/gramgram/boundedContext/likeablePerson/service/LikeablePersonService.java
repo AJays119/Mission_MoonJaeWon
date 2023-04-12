@@ -20,6 +20,8 @@ public class LikeablePersonService {
     private final LikeablePersonRepository likeablePersonRepository;
     private final InstaMemberService instaMemberService;
 
+    private int count = 0;
+
     @Transactional
     public RsData<LikeablePerson> like(Member member, String username, int attractiveTypeCode) {
         if (!member.hasConnectedInstaMember()) {
@@ -42,12 +44,14 @@ public class LikeablePersonService {
                 .attractiveTypeCode(attractiveTypeCode) // 1=외모, 2=능력, 3=성격
                 .build();
 
+        likeablePersonRepository.save(likeablePerson);
 
-        likeablePersonRepository.save(likeablePerson); // 저장
+        if (member.getInstaMember().getFromLikeablePeople().size() > 9) {
+            return RsData.of("F-3", "최대 10명까지 등록이 가능합니다.");
+        }
 
         // 너가 좋아하는 호감표시 생겼어.
         fromInstaMember.addFromLikeablePerson(likeablePerson);
-
         // 너를 좋아하는 호감표시 생겼어.
         toInstaMember.addToLikeablePerson(likeablePerson);
 
