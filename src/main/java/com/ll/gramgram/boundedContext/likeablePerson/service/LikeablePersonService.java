@@ -42,10 +42,16 @@ public class LikeablePersonService {
                 .attractiveTypeCode(attractiveTypeCode) // 1=외모, 2=능력, 3=성격
                 .build();
 
-        likeablePersonRepository.save(likeablePerson);
+        if (likeablePerson.equals(member.getInstaMember().getUsername())) {
+            return RsData.of("F-3", "이미 등록된 유저입니다.");
+        }
+
+        else {
+            likeablePersonRepository.save(likeablePerson);
+        }
 
         if (member.getInstaMember().getFromLikeablePeople().size() > 9) {
-            return RsData.of("F-3", "최대 10명까지 등록이 가능합니다.");
+            return RsData.of("F-4", "최대 10명까지 등록이 가능합니다.");
         }
 
         // 너가 좋아하는 호감표시 생겼어.
