@@ -2,15 +2,19 @@ package com.ll.gramgram.boundedContext.member.entity;
 
 import com.ll.gramgram.base.baseEntity.BaseEntity;
 import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 @Getter
@@ -25,17 +29,22 @@ public class Member extends BaseEntity {
     @OneToOne // 1:1
     @Setter // memberService::updateInstaMember 함수 때문에
     private InstaMember instaMember;
+
     // 이 함수 자체는 만들어야 한다. 스프링 시큐리티 규격
     public List<? extends GrantedAuthority> getGrantedAuthorities() {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+
         // 모든 멤버는 member 권한을 가진다.
         grantedAuthorities.add(new SimpleGrantedAuthority("member"));
+
         // username이 admin인 회원은 추가로 admin 권한도 가진다.
         if ("admin".equals(username)) {
             grantedAuthorities.add(new SimpleGrantedAuthority("admin"));
         }
+
         return grantedAuthorities;
     }
+
     // 이 회원이 본인의 인스타ID를 등록했는지 안했는지
     public boolean hasConnectedInstaMember() {
         return instaMember != null;
