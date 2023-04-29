@@ -1,14 +1,18 @@
 package com.ll.gramgram.base.initData;
 
 import com.ll.gramgram.boundedContext.instaMember.service.InstaMemberService;
+import com.ll.gramgram.boundedContext.likeablePerson.entity.LikeablePerson;
 import com.ll.gramgram.boundedContext.likeablePerson.service.LikeablePersonService;
 import com.ll.gramgram.boundedContext.member.entity.Member;
 import com.ll.gramgram.boundedContext.member.service.MemberService;
+import com.ll.gramgram.standard.util.Ut;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 @Configuration
 @Profile({"dev", "test"})
 public class NotProd {
@@ -18,7 +22,10 @@ public class NotProd {
             InstaMemberService instaMemberService,
             LikeablePersonService likeablePersonService
     ) {
-        return args -> {
+        return new CommandLineRunner() {
+            @Override
+            @Transactional
+            public void run(String... args) throws Exception {
             Member memberAdmin = memberService.join("admin", "1234").getData();
             Member memberUser1 = memberService.join("user1", "1234").getData();
             Member memberUser2 = memberService.join("user2", "1234").getData();
@@ -35,19 +42,11 @@ public class NotProd {
             instaMemberService.connect(memberUser4, "insta_user4", "M");
             instaMemberService.connect(memberUser5, "insta_user5", "W");
 
-            likeablePersonService.like(memberUser3, "insta_user4", 1);
-            likeablePersonService.like(memberUser3, "insta_user100", 2);
-
-            likeablePersonService.like(memberUser5, "insta_user101", 2);
-            likeablePersonService.like(memberUser5, "insta_user102", 2);
-            likeablePersonService.like(memberUser5, "insta_user103", 2);
-            likeablePersonService.like(memberUser5, "insta_user104", 2);
-            likeablePersonService.like(memberUser5, "insta_user105", 2);
-            likeablePersonService.like(memberUser5, "insta_user106", 2);
-            likeablePersonService.like(memberUser5, "insta_user107", 2);
-            likeablePersonService.like(memberUser5, "insta_user108", 2);
-            likeablePersonService.like(memberUser5, "insta_user109", 2);
-            likeablePersonService.like(memberUser5, "insta_user110", 2);
+            LikeablePerson likeablePersonToinstaUser4 = likeablePersonService.like(memberUser3, "insta_user4", 1).getData();
+            Ut.reflection.setFieldValue(likeablePersonToinstaUser4, "modifyUnlockDate", LocalDateTime.now().minusSeconds(1));
+            LikeablePerson likeablePersonToinstaUser100 = likeablePersonService.like(memberUser3, "insta_user100", 2).getData();
+            Ut.reflection.setFieldValue(likeablePersonToinstaUser100, "modifyUnlockDate", LocalDateTime.now().minusSeconds(1));
+            }
         };
     }
 }
