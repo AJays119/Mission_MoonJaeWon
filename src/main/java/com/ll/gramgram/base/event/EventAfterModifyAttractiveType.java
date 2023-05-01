@@ -1,4 +1,3 @@
-
 package com.ll.gramgram.base.event;
 
 import com.ll.gramgram.boundedContext.likeablePerson.entity.LikeablePerson;
