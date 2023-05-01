@@ -1,10 +1,6 @@
 spring:
   datasource:
-<<<<<<< HEAD
     url: jdbc:mariadb://192.168.56.101:3308/gram__dev?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
-=======
-    url: jdbc:mariadb://127.0.0.1:3307/gram__dev?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
->>>>>>> 49355dcf48c2515d782f43d9314634ffde988b20
   jpa:
     hibernate:
       ddl-auto: create

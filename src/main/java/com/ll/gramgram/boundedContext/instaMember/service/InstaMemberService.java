@@ -4,11 +4,8 @@ import com.ll.gramgram.base.rsData.RsData;
 import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
 import com.ll.gramgram.boundedContext.instaMember.entity.InstaMemberSnapshot;
 import com.ll.gramgram.boundedContext.instaMember.repository.InstaMemberRepository;
-<<<<<<< HEAD
 import com.ll.gramgram.boundedContext.instaMember.repository.InstaMemberSnapshotRepository;
 import com.ll.gramgram.boundedContext.likeablePerson.entity.LikeablePerson;
-=======
->>>>>>> 49355dcf48c2515d782f43d9314634ffde988b20
 import com.ll.gramgram.boundedContext.member.entity.Member;
 import com.ll.gramgram.boundedContext.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -142,5 +139,42 @@ public class InstaMemberService {
 
                     saveSnapshot(snapshot);
                 });
+    }
+
+    public RsData<InstaMember> connect(Member actor, String gender, String oauthId, String username, String accessToken) {
+        Optional<InstaMember> opInstaMember = instaMemberRepository.findByOauthId(oauthId);
+
+        if (opInstaMember.isPresent()) {
+            InstaMember instaMember = opInstaMember.get();
+            instaMember.setUsername(username);
+            instaMember.setAccessToken(accessToken);
+            instaMember.setGender(gender);
+            instaMemberRepository.save(instaMember);
+
+            actor.setInstaMember(instaMember);
+
+            return RsData.of("S-3", "인스타계정이 연결되었습니다.", instaMember);
+        }
+
+        opInstaMember = findByUsername(username);
+
+        if (opInstaMember.isPresent()) {
+            InstaMember instaMember = opInstaMember.get();
+            instaMember.setOauthId(oauthId);
+            instaMember.setAccessToken(accessToken);
+            instaMember.setGender(gender);
+            instaMemberRepository.save(instaMember);
+
+            actor.setInstaMember(instaMember);
+
+            return RsData.of("S-4", "인스타계정이 연결되었습니다.", instaMember);
+        }
+
+        InstaMember instaMember = connect(actor, username, gender).getData();
+
+        instaMember.setOauthId(oauthId);
+        instaMember.setAccessToken(accessToken);
+
+        return RsData.of("S-5", "인스타계정이 연결되었습니다.", instaMember);
     }
 }

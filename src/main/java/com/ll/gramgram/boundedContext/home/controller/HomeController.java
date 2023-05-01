@@ -42,17 +42,9 @@ public class HomeController {
         return sb.toString().replaceAll("\n", "<br>");
     }
 
-<<<<<<< HEAD
     @GetMapping("/usr/historyBackTest")
     @PreAuthorize("hasAuthority('admin')")
     public String showHistoryBackTest(HttpSession session) {
         return rq.historyBack("여기는 당신같은 사람이 오면 안되요.");
     }
 }
-=======
-    @GetMapping("/historyBackTest")
-    public String showHistoryBackTest(HttpSession session) {
-        return rq.historyBack("여기는 당신같은 사람이 오면 안되요.");
-    }
-}
->>>>>>> 49355dcf48c2515d782f43d9314634ffde988b20

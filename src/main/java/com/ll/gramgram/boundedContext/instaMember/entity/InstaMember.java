@@ -2,10 +2,7 @@ package com.ll.gramgram.boundedContext.instaMember.entity;
 
 import com.ll.gramgram.boundedContext.likeablePerson.entity.LikeablePerson;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -19,13 +16,16 @@ import java.util.List;
 @SuperBuilder
 @ToString(callSuper = true)
 public class InstaMember extends InstaMemberBase {
+    @Setter
     @Column(unique = true)
     private String username;
-<<<<<<< HEAD
-=======
+
     @Setter
-    private String gender;
->>>>>>> 49355dcf48c2515d782f43d9314634ffde988b20
+    @Column(unique = true)
+    private String oauthId;
+
+    @Setter
+    private String accessToken;
 
     @OneToMany(mappedBy = "fromInstaMember", cascade = {CascadeType.ALL})
     @OrderBy("id desc") // 정렬
@@ -104,6 +104,5 @@ public class InstaMember extends InstaMemberBase {
                 .likesCountByGenderWomanAndAttractiveTypeCode2(likesCountByGenderWomanAndAttractiveTypeCode2)
                 .likesCountByGenderWomanAndAttractiveTypeCode3(likesCountByGenderWomanAndAttractiveTypeCode3)
                 .build();
-
     }
 }

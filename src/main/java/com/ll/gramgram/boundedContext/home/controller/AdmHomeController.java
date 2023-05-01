@@ -18,6 +18,6 @@ public class AdmHomeController {
 
     @GetMapping("/home/main")
     public String showMain() {
-        return "adm/home/main";
+        return "about";
     }
 }

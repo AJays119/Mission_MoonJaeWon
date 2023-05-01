@@ -28,15 +28,8 @@ public class LikeablePersonService {
     private final ApplicationEventPublisher publisher;
 
     @Transactional
-<<<<<<< HEAD
     public RsData<LikeablePerson> like(Member actor, String username, int attractiveTypeCode) {
         RsData canLikeRsData = canLike(actor, username, attractiveTypeCode);
-=======
-    public RsData<LikeablePerson> like(Member member, String username, int attractiveTypeCode) {
-        if (!member.hasConnectedInstaMember()) {
-            return RsData.of("F-2", "먼저 본인의 인스타그램 아이디를 입력해야 합니다.");
-        }
->>>>>>> 49355dcf48c2515d782f43d9314634ffde988b20
 
         if (canLikeRsData.isFail()) return canLikeRsData;
 
@@ -55,20 +48,11 @@ public class LikeablePersonService {
                 .modifyUnlockDate(AppConfig.genLikeablePersonModifyUnlockDate())
                 .build();
 
-        if (likeablePerson.equals(member.getInstaMember().getUsername())) {
-            return RsData.of("F-3", "이미 등록된 유저입니다.");
-        }
-
-        else {
-            likeablePersonRepository.save(likeablePerson);
-        }
-
-        if (member.getInstaMember().getFromLikeablePeople().size() > 9) {
-            return RsData.of("F-4", "최대 10명까지 등록이 가능합니다.");
-        }
+        likeablePersonRepository.save(likeablePerson); // 저장
 
         // 너가 좋아하는 호감표시 생겼어.
         fromInstaMember.addFromLikeablePerson(likeablePerson);
+
         // 너를 좋아하는 호감표시 생겼어.
         toInstaMember.addToLikeablePerson(likeablePerson);
 
@@ -86,7 +70,6 @@ public class LikeablePersonService {
     }
 
     @Transactional
-<<<<<<< HEAD
     public RsData cancel(LikeablePerson likeablePerson) {
         publisher.publishEvent(new EventBeforeCancelLike(this, likeablePerson));
 
@@ -96,20 +79,13 @@ public class LikeablePersonService {
         // 너가 받은 좋아요가 사라졌어.
         likeablePerson.getToInstaMember().removeToLikeablePerson(likeablePerson);
 
-=======
-    public RsData delete(LikeablePerson likeablePerson) {
->>>>>>> 49355dcf48c2515d782f43d9314634ffde988b20
         likeablePersonRepository.delete(likeablePerson);
 
         String likeCanceledUsername = likeablePerson.getToInstaMember().getUsername();
         return RsData.of("S-1", "%s님에 대한 호감을 취소하였습니다.".formatted(likeCanceledUsername));
     }
 
-<<<<<<< HEAD
     public RsData canCancel(Member actor, LikeablePerson likeablePerson) {
-=======
-    public RsData canActorDelete(Member actor, LikeablePerson likeablePerson) {
->>>>>>> 49355dcf48c2515d782f43d9314634ffde988b20
         if (likeablePerson == null) return RsData.of("F-1", "이미 삭제되었습니다.");
 
         // 수행자의 인스타계정 번호
@@ -121,7 +97,6 @@ public class LikeablePersonService {
             return RsData.of("F-2", "권한이 없습니다.");
 
         return RsData.of("S-1", "삭제가능합니다.");
-<<<<<<< HEAD
     }
 
     private RsData canLike(Member actor, String username, int attractiveTypeCode) {
@@ -236,7 +211,5 @@ public class LikeablePersonService {
 
 
         return RsData.of("S-1", "호감표시취소가 가능합니다.");
-=======
->>>>>>> 49355dcf48c2515d782f43d9314634ffde988b20
     }
 }
