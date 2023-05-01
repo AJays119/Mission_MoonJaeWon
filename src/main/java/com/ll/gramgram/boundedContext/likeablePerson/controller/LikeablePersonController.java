@@ -25,9 +25,15 @@ public class LikeablePersonController {
     private final LikeablePersonService likeablePersonService;
 
     @PreAuthorize("isAuthenticated()")
+<<<<<<< HEAD
     @GetMapping("/like")
     public String showLike() {
         return "usr/likeablePerson/like";
+=======
+    @GetMapping("/add")
+    public String showAdd() {
+        return "usr/likeablePerson/add";
+>>>>>>> 49355dcf48c2515d782f43d9314634ffde988b20
     }
 
     @AllArgsConstructor
@@ -43,9 +49,15 @@ public class LikeablePersonController {
     }
 
     @PreAuthorize("isAuthenticated()")
+<<<<<<< HEAD
     @PostMapping("/like")
     public String like(@Valid LikeForm likeForm) {
         RsData<LikeablePerson> rsData = likeablePersonService.like(rq.getMember(), likeForm.getUsername(), likeForm.getAttractiveTypeCode());
+=======
+    @PostMapping("/add")
+    public String add(@Valid AddForm addForm) {
+        RsData<LikeablePerson> createRsData = likeablePersonService.like(rq.getMember(), addForm.getUsername(), addForm.getAttractiveTypeCode());
+>>>>>>> 49355dcf48c2515d782f43d9314634ffde988b20
 
         if (rsData.isFail()) {
             return rq.historyBack(rsData);
@@ -71,6 +83,7 @@ public class LikeablePersonController {
 
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{id}")
+<<<<<<< HEAD
     public String cancel(@PathVariable Long id) {
         LikeablePerson likeablePerson = likeablePersonService.findById(id).orElse(null);
 
@@ -126,5 +139,19 @@ public class LikeablePersonController {
     public String showToList(Model model) {
         //TODO : showToList 구현해야 함
         return "usr/likeablePerson/toList 구현해야 함";
+=======
+    public String delete(@PathVariable Long id) {
+        LikeablePerson likeablePerson = likeablePersonService.findById(id).orElse(null);
+
+        RsData canActorDeleteRsData = likeablePersonService.canActorDelete(rq.getMember(), likeablePerson);
+
+        if (canActorDeleteRsData.isFail()) return rq.historyBack(canActorDeleteRsData);
+
+        RsData deleteRsData = likeablePersonService.delete(likeablePerson);
+
+        if (deleteRsData.isFail()) return rq.historyBack(deleteRsData);
+
+        return rq.redirectWithMsg("/likeablePerson/list", deleteRsData);
+>>>>>>> 49355dcf48c2515d782f43d9314634ffde988b20
     }
 }

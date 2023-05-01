@@ -21,6 +21,11 @@ import java.util.List;
 public class InstaMember extends InstaMemberBase {
     @Column(unique = true)
     private String username;
+<<<<<<< HEAD
+=======
+    @Setter
+    private String gender;
+>>>>>>> 49355dcf48c2515d782f43d9314634ffde988b20
 
     @OneToMany(mappedBy = "fromInstaMember", cascade = {CascadeType.ALL})
     @OrderBy("id desc") // 정렬

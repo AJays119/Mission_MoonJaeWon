@@ -4,8 +4,11 @@ import com.ll.gramgram.base.rsData.RsData;
 import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
 import com.ll.gramgram.boundedContext.instaMember.entity.InstaMemberSnapshot;
 import com.ll.gramgram.boundedContext.instaMember.repository.InstaMemberRepository;
+<<<<<<< HEAD
 import com.ll.gramgram.boundedContext.instaMember.repository.InstaMemberSnapshotRepository;
 import com.ll.gramgram.boundedContext.likeablePerson.entity.LikeablePerson;
+=======
+>>>>>>> 49355dcf48c2515d782f43d9314634ffde988b20
 import com.ll.gramgram.boundedContext.member.entity.Member;
 import com.ll.gramgram.boundedContext.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
