@@ -58,9 +58,13 @@ public class NotProd {
                 instaMemberService.connect(memberUser5, "insta_user5", "W");
 
                 // 원활한 테스트와 개발을 위해서 자동으로 만들어지는 호감이 삭제, 수정이 가능하도록 쿨타임해제
-                LikeablePerson likeablePersonToInstaUser4 = likeablePersonService.like(memberUser3, "insta_user4", 1).getData();
+                LikeablePerson likeablePersonToInstaUser4 = likeablePersonService.like(memberUser2, "insta_user4", 1).getData();
                 Ut.reflection.setFieldValue(likeablePersonToInstaUser4, "modifyUnlockDate", LocalDateTime.now().minusSeconds(1));
-                LikeablePerson likeablePersonToInstaUser100 = likeablePersonService.like(memberUser3, "insta_user100", 2).getData();
+                LikeablePerson likeablePersonToInstaUser5 = likeablePersonService.like(memberUser3, "insta_user4", 2).getData();
+                Ut.reflection.setFieldValue(likeablePersonToInstaUser5, "modifyUnlockDate", LocalDateTime.now().minusSeconds(1));
+                LikeablePerson likeablePersonToInstaUser6 = likeablePersonService.like(memberUser5, "insta_user4", 3).getData();
+                Ut.reflection.setFieldValue(likeablePersonToInstaUser6, "modifyUnlockDate", LocalDateTime.now().minusSeconds(1));
+                LikeablePerson likeablePersonToInstaUser100 = likeablePersonService.like(memberUser4, "insta_user100", 2).getData();
                 Ut.reflection.setFieldValue(likeablePersonToInstaUser100, "modifyUnlockDate", LocalDateTime.now().minusSeconds(1));
 
                 LikeablePerson likeablePersonToInstaUserAbcd = likeablePersonService.like(memberUser3, "insta_user_abcd", 2).getData();
