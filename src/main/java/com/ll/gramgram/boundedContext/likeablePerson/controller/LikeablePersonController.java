@@ -124,15 +124,8 @@ public class LikeablePersonController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/toList")
-    public String showToList(Model model, String gender, String attractiveTypeCode, String sortCode) {
+    public String showToList(Model model, String gender, String attractiveTypeCode) {
         InstaMember instaMember = rq.getMember().getInstaMember();
-
-        // 인스타인증을 했는지 체크0
-        /*if (instaMember != null) {
-            // 해당 인스타회원이 좋아하는 사람들 목록
-            List<LikeablePerson> likeablePeople = instaMember.getToLikeablePeople();
-            model.addAttribute("likeablePeople", likeablePeople);
-        }*/
 
         // 인스타인증을 했는지 체크
         if (instaMember != null) {
@@ -140,14 +133,14 @@ public class LikeablePersonController {
             Stream<LikeablePerson> likeablePeopleStream = instaMember.getToLikeablePeople().stream();
 
             //성별 구분
-            if (gender != null) {
+            if (gender != null && gender.length() > 0) {
                 likeablePeopleStream = likeablePeopleStream.filter(likeablePerson -> likeablePerson.getFromInstaMember().getGender().equals(gender));
             }
 
             //호감사유 구분
-            //if (attractiveTypeCode != null) {
-
-            //}
+            if (attractiveTypeCode != null) {
+                likeablePeopleStream = likeablePeopleStream.filter(likeablePerson -> likeablePerson.getAttractiveTypeCode() == Integer.parseInt(attractiveTypeCode));
+            }
 
             List<LikeablePerson> likeablePeople = likeablePeopleStream.collect(Collectors.toList());
             model.addAttribute("likeablePeople", likeablePeople);
